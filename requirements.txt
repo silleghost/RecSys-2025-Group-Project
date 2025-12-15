@@ -1,0 +1,19 @@
+# Core data science stack
+numpy
+pandas
+scipy
+scikit-learn
+tqdm
+
+# Recommender systems
+implicit  # ALS/BPR for implicit feedback; falls back gracefully if unavailable at runtime
+
+# Visualization (used in notebooks)
+matplotlib
+seaborn
+
+# IO
+pyarrow  # for parquet read/write
+
+# Deep learning (teammates can choose one)
+# torch
