@@ -14,6 +14,32 @@ def load_interactions(path: str) -> pd.DataFrame:
     Prints basic info for a quick sanity check.
     """
     interactions = pd.read_csv(path)
+
+    # If dataset contains a "library" column (purchased games as lists), explode it.
+    if "library" in interactions.columns:
+        import ast
+
+        def parse_library(val):
+            if isinstance(val, list):
+                return val
+            if isinstance(val, str):
+                try:
+                    return ast.literal_eval(val)
+                except Exception:
+                    return []
+            return []
+
+        interactions["library"] = interactions["library"].apply(parse_library)
+        target_col = "appid"
+        interactions = (
+            interactions.explode("library")
+            .rename(columns={"library": target_col})
+            .reset_index(drop=True)
+        )
+        interactions[target_col] = pd.to_numeric(interactions[target_col], errors="coerce")
+        interactions = interactions.dropna(subset=["playerid", target_col])
+        interactions[target_col] = interactions[target_col].astype(int)
+
     print("Loaded interactions:", interactions.shape)
     print("Columns:", interactions.columns.tolist())
     print(interactions.head())

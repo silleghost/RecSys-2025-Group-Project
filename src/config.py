@@ -12,15 +12,15 @@ RAW_DATA_DIR = DATA_DIR / "raw"
 PROCESSED_DATA_DIR = DATA_DIR / "processed"
 
 # File locations (adjust as needed)
-INTERACTIONS_FILE = RAW_DATA_DIR / "reviews.csv"
+INTERACTIONS_FILE = RAW_DATA_DIR / "purchased_games.csv"
 GAMES_METADATA_FILE = RAW_DATA_DIR / "games_march2025_cleaned.csv"
 GAME_ID_COL_IN_GAMES = "appid"  # item id column in games metadata
 
 # Column names (replace with actual names after EDA)
 USER_COL = "playerid"
-ITEM_COL = "gameid"  # aligns with reviews.csv; games metadata uses `appid`
-TIMESTAMP_COL = "posted"  # set to None if unavailable
-INTERACTION_VALUE_COL = "helpful"  # not required for implicit models
+ITEM_COL = "appid"  # aligns purchases with games metadata
+TIMESTAMP_COL = None  # purchases have no timestamp
+INTERACTION_VALUE_COL = "interaction"  # unused for implicit baseline
 
 # Minimum interaction thresholds
 MIN_USER_INTERACTIONS = 5
