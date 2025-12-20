@@ -94,6 +94,40 @@ def evaluate_topk(
     return pd.DataFrame(rows)
 
 
+def evaluate_model(
+    model: object,
+    ground_truth: Dict[int, List[int]],
+    users: List[int],
+    ks: List[int] = [5, 10, 20],
+    known_items: Dict[int, List[int]] | None = None,
+    exclude_known: bool = True,
+    recommend_fn: RecommenderFn | None = None,
+) -> pd.DataFrame:
+    """
+    Uniform wrapper to evaluate any model with a `.recommend` method.
+    The recommender is expected to support either:
+    - recommend(user_id, k), or
+    - recommend(user_id, known_items, k).
+    Alternatively, pass a custom recommend_fn(user_id, k) to override model.recommend.
+    """
+
+    def _recommend(user_id: int, k: int) -> List[int]:
+        known = known_items.get(user_id, []) if known_items else []
+        if recommend_fn is not None:
+            recs = recommend_fn(user_id, k)
+        else:
+            try:
+                recs = model.recommend(user_id, known, k)
+            except TypeError:
+                recs = model.recommend(user_id, k)  # type: ignore[arg-type]
+        if exclude_known and known:
+            known_set = set(known)
+            recs = [r for r in recs if r not in known_set]
+        return recs[:k]
+
+    return evaluate_topk(ground_truth, _recommend, users, ks=ks)
+
+
 def build_ground_truth(
     interactions: pd.DataFrame,
     user_col: str,
@@ -107,3 +141,21 @@ def build_ground_truth(
         .apply(list)
         .to_dict()
     )
+
+
+def make_recommend_fn_from_topk_model(topk_model: object, known_items: Dict[int, List[int]] | None = None) -> Callable[[int, int], List[int]]:
+    """
+    Adapter for models exposing `.recommend(user_id, top_k=k)` (and optionally `.user_map`).
+    Returns a recommend_fn(user_id, k) compatible with evaluate_model.
+    Known items are excluded if provided.
+    """
+    def recommend_fn(user_id: int, k: int) -> List[int]:
+        if hasattr(topk_model, "user_map") and getattr(topk_model, "user_map"):
+            if user_id not in topk_model.user_map:
+                return []
+        recs = topk_model.recommend(user_id, top_k=k)
+        if known_items:
+            recs = [r for r in recs if r not in set(known_items.get(user_id, []))]
+        return recs[:k]
+
+    return recommend_fn

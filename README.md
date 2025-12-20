@@ -8,9 +8,12 @@ Reproducible coursework project for a 3‑person team on Steam game recommendati
 - `notebooks/01_eda_and_preprocessing.ipynb` — inspect raw data, choose column names, filter, and split train/test.
 - `notebooks/02_feature_engineering.ipynb` — build item (content) feature vectors.
 - `notebooks/03_cf_baselines_and_evaluation.ipynb` — classical recommenders: popularity, item-based CF, implicit MF.
+- `notebooks/03_cf_item_based_and_user_based.ipynb` — teammate CF experiments.
+- `notebooks/04_content_based_experiments.ipynb` — content-based experiments with uniform evaluation.
 - `notebooks/04_content_based_template.ipynb` — template for teammate 1 to refine content-based model.
 - `notebooks/05_neural_cf_template.ipynb` — template for teammate 2 to refine a neural CF model.
 - `src/` — reusable Python modules (config, data loading, preprocessing, features, evaluation, models).
+- `scripts/run_content_based.py` — CLI to evaluate the content-based hybrid model on processed data (useful for cluster runs).
 
 ## Getting started
 1. Install dependencies: `pip install -r requirements.txt`.
@@ -27,9 +30,9 @@ Reproducible coursework project for a 3‑person team on Steam game recommendati
 - Popularity baseline.
 - Item-based collaborative filtering.
 - Implicit matrix factorization for implicit feedback.
+- Content-based hybrids (feature-based + popularity), feature-kNN, optional LightFM hybrid (see `04_content_based_experiments.ipynb`).
 
 Planned/extendable:
-- Content-based recommender (template provided).
 - Neural collaborative filtering (template provided).
 
 ## Notes for the team
