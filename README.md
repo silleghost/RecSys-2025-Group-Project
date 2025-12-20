@@ -35,9 +35,15 @@ We build a recommender system for Steam games that suggests titles each user is 
   - Main evaluation script: src/evaluation.py computes HitRate/Recall/NDCG@K with seen-item filtering
 
 ## Results
-  - On a 2K-user sample (≥10 interactions), BM25+SVD hybrids outperform pure popularity, LightFM and logistic provide additional baselines.
-  - With one held-out item per user, HitRate and Recall coincide, NDCG differentiates ranking quality.
-  - Top models are reported in the notebook summary (NDCG@10 table).
+Top models on a 2K-user sample, sorted by NDCG@10:
+
+| Model             | NDCG@10 | HitRate@10 | Recall@10 |
+| ------------------| ------- | ---------- | ---------- |
+| hybrid_alpha_0.45 | 0.077934 | 0.1370 | 0.1370 |
+| hybrid_alpha_0.4  | 0.077879 | 0.1355 | 0.1355 |
+| hybrid_alpha_0.35 | 0.077498 | 0.1345 | 0.1345 |
+| hybrid_alpha_0.45 | 0.077190 | 0.1335 | 0.1335 |  
+| hybrid_alpha_0.4  | 0.077124 | 0.1340 | 0.1340 |
 
 ## How to run
 
@@ -55,17 +61,3 @@ We build a recommender system for Steam games that suggests titles each user is 
 
   - Data: Steam metadata and interactions from Kaggle (data/raw/).
   - Methods: LightFM (https://making.lyst.com/lightfm/docs/), BM25 weighting, standard top-N metrics (HitRate/Recall/NDCG).
-
-
-## Sample results (notebook summary)
-Top models on a 2K-user sample (min 10 interactions, BM25/SVD features), sorted by NDCG@10:
-
-| Model                  | NDCG@10 | HitRate@10 | Recall@10 |
-| ---------------------- | ------- | ---------- | ---------- |
-| hybrid_alpha_0.2       | 0.0728  | 0.1255     | 0.1255     |
-| hybrid_alpha_0.3       | 0.0727  | 0.1225     | 0.1225     |
-| hybrid_alpha_0.4       | 0.0703  | 0.1190     | 0.1190     |
-| popularity             | 0.0701  | 0.1190     | 0.1190     |
-| feature_knn (sample)   | 0.0093  | 0.0170     | 0.0170     |
-
-Run `notebooks/04_content_based_experiments.ipynb` to regenerate exact numbers for your latest data/sample and expanded model sweeps (LightFM, logistic scorer).
