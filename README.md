@@ -55,3 +55,17 @@ We build a recommender system for Steam games that suggests titles each user is 
 
   - Data: Steam metadata and interactions from Kaggle (data/raw/).
   - Methods: LightFM (https://making.lyst.com/lightfm/docs/), BM25 weighting, standard top-N metrics (HitRate/Recall/NDCG).
+
+
+## Sample results (notebook summary)
+Top models on a 2K-user sample (min 10 interactions, BM25/SVD features), sorted by NDCG@10:
+
+| Model                  | NDCG@10 | HitRate@10 | Recall@10 |
+| ---------------------- | ------- | ---------- | ---------- |
+| hybrid_alpha_0.2       | 0.0728  | 0.1255     | 0.1255     |
+| hybrid_alpha_0.3       | 0.0727  | 0.1225     | 0.1225     |
+| hybrid_alpha_0.4       | 0.0703  | 0.1190     | 0.1190     |
+| popularity             | 0.0701  | 0.1190     | 0.1190     |
+| feature_knn (sample)   | 0.0093  | 0.0170     | 0.0170     |
+
+Run `notebooks/04_content_based_experiments.ipynb` to regenerate exact numbers for your latest data/sample and expanded model sweeps (LightFM, logistic scorer).
