@@ -48,8 +48,6 @@ Top models on a 2K-user sample (min 10 interactions), sorted by NDCG@10:
 | popularity (content) | 0.0701  | 0.1190     | 0.1190     |
 | feature_kNN (sample) | 0.0093  | 0.0170     | 0.0170     |
 
-Run `notebooks/04_content_based_experiments.ipynb` for updated content-based results (LightFM/logistic/hybrid grids), `notebooks/03_cf_baselines_and_evaluation.ipynb` for CF baselines, and `notebooks/05-transformer-based.ipynb` for the transformer model.
-
 ## How to run
 
   - Environment: pip install -r requirements.txt.
