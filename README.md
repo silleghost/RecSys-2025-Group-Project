@@ -35,15 +35,20 @@ We build a recommender system for Steam games that suggests titles each user is 
   - Main evaluation script: src/evaluation.py computes HitRate/Recall/NDCG@K with seen-item filtering
 
 ## Results
-Top models on a 2K-user sample, sorted by NDCG@10:
+Top models on a 2K-user sample (min 10 interactions), sorted by NDCG@10:
 
-| Model             | NDCG@10 | HitRate@10 | Recall@10 |
-| ------------------| ------- | ---------- | ---------- |
-| hybrid_alpha_0.45 | 0.077934 | 0.1370 | 0.1370 |
-| hybrid_alpha_0.4  | 0.077879 | 0.1355 | 0.1355 |
-| hybrid_alpha_0.35 | 0.077498 | 0.1345 | 0.1345 |
-| hybrid_alpha_0.45 | 0.077190 | 0.1335 | 0.1335 |  
-| hybrid_alpha_0.4  | 0.077124 | 0.1340 | 0.1340 |
+| Model                | NDCG@10 | HitRate@10 | Recall@10 |
+| -------------------- | ------- | ---------- | ---------- |
+| hybrid_alpha_0.45    | 0.0779  | 0.1370     | 0.1370     |
+| hybrid_alpha_0.40    | 0.0779  | 0.1355     | 0.1355     |
+| hybrid_alpha_0.35    | 0.0775  | 0.1345     | 0.1345     |
+| User-based CF        | 0.1263  | 0.2028     | 0.2028     |
+| Item-based CF        | 0.1214  | 0.1932     | 0.1932     |
+| Transformer-based    | 0.0157  | 0.0483     | 0.0483     |
+| popularity (content) | 0.0701  | 0.1190     | 0.1190     |
+| feature_kNN (sample) | 0.0093  | 0.0170     | 0.0170     |
+
+Run `notebooks/04_content_based_experiments.ipynb` for updated content-based results (LightFM/logistic/hybrid grids), `notebooks/03_cf_baselines_and_evaluation.ipynb` for CF baselines, and `notebooks/05-transformer-based.ipynb` for the transformer model.
 
 ## How to run
 
