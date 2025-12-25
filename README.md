@@ -27,8 +27,8 @@ We build a recommender system for Steam games that suggests titles each user is 
   ## Methods
 
  ### Collaborative filtering (notebooks/03_cf_baselines_and_evaluation.ipynb):
-  - User-based CF: similarity over user interaction profiles; recommends items from nearest users, excluding seen items; evaluated with shared HitRate/Recall/NDCG.
-  - Item-based CF: similarity over item interaction profiles (cosine); recommends items similar to those a user interacted with; evaluated with the same metrics.
+  - User-based CF: similarity over user interaction profiles, recommends items from nearest users, excluding seen items, evaluated with shared HitRate/Recall/NDCG.
+  - Item-based CF: similarity over item interaction profiles (cosine), recommends items similar to those a user interacted with, evaluated with the same metrics.
 
  ### Content-based filtering (notebooks/04_content_based_experiments.ipynb):
   - Popularity: rank by global interaction counts, filter seen items.
@@ -39,8 +39,8 @@ We build a recommender system for Steam games that suggests titles each user is 
   - Main evaluation script: src/evaluation.py computes HitRate/Recall/NDCG@K with seen-item filtering
 
   ### Neural / transformer-based (notebooks/05-transformer-based.ipynb):
-  - SBERT + KNN: semantic embeddings from SBERT on concatenated metadata fields; KNN over embeddings for content-only recommendations.
-  - Two-tower transformer: item tower uses SBERT+metadata embeddings (PCA-compressed); user tower processes purchase sequences via Transformer; trained with BPR loss and negative sampling; inference via dot-product ranking of precomputed item vectors.
+  - SBERT + KNN: semantic embeddings from SBERT on concatenated metadata fields, KNN over embeddings for content-only recommendations.
+  - Two-tower transformer: item tower uses SBERT+metadata embeddings (PCA-compressed), user tower processes purchase sequences via Transformer, trained with BPR loss and negative sampling, inference via dot-product ranking of precomputed item vectors.
 
 ## Results
 Top models on a 2K-user sample (min 10 interactions), sorted by NDCG@10:
